@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Synchronized Metronome</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Synchronized Metronome</h1>
+  <div class="controls">
+    <label>
+      Tempo (BPM):
+      <input type="number" id="tempoInput" value="120">
+      <button id="setTempoBtn">Set Tempo</button>
+    </label>
+    <br>
+    <button id="startBtn">Start</button>
+    <button id="stopBtn">Stop</button>
+    <br>
+    <label>
+      Offset (ms):
+      <input type="range" id="offsetSlider" min="0" max="500" value="0" step="0.1">
+      <span id="offsetValue">0.0</span> ms
+    </label>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
