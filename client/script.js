@@ -1,3 +1,13 @@
+const offsetSlider = document.getElementById("offsetSlider");
+const offsetDisplay = document.getElementById("offsetDisplay");
+
+let manualOffsetSeconds = 0;
+
+offsetSlider.addEventListener("input", () => {
+    manualOffsetSeconds = parseFloat(offsetSlider.value) / 1000; // convert ms to seconds
+    offsetDisplay.textContent = `${offsetSlider.value} ms`;
+});
+
 const socket = io();
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let timeOffset = 0;
@@ -57,6 +67,8 @@ socket.on("metronome:begin", ({ bpm, startAt }) => {
     console.log(`🎵 Starting metronome at audioCtx time: ${startTime}`);
 
     function scheduleClick(time, count) {
+        const adjustedTime = time + manualOffsetSeconds;
+
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
@@ -64,17 +76,18 @@ socket.on("metronome:begin", ({ bpm, startAt }) => {
         gain.connect(audioCtx.destination);
 
         osc.frequency.value = count % 4 === 0 ? 1000 : 800;
-        gain.gain.setValueAtTime(1, time);
-        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+        gain.gain.setValueAtTime(1, adjustedTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, adjustedTime + 0.05);
 
-        osc.start(time);
-        osc.stop(time + 0.1);
+        osc.start(adjustedTime);
+        osc.stop(adjustedTime + 0.1);
 
         setTimeout(() => {
             visual.style.background = "#0f0";
             setTimeout(() => (visual.style.background = "gray"), 100);
-        }, (time - audioCtx.currentTime) * 1000);
+        }, (adjustedTime - audioCtx.currentTime) * 1000);
     }
+
 
     function scheduler() {
         if (!metronomeActive) return;
