@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Synced Metronome</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Synchronized Metronome</h1>
+    <label>BPM: <input type="number" id="bpm" value="120" /></label>
+    <button id="startBtn">Start Metronome</button>
+    <button id="stopBtn">Stop Metronome</button>
+    <div id="status">⏳ Waiting to start...</div>
+    <div id="visual"></div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
