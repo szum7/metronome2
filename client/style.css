@@ -39,3 +39,10 @@ button {
     background: #a00;
     color: white;
 }
+#offsetSlider {
+  width: 300px;
+  margin-top: 10px;
+}
+#offsetDisplay {
+  margin-left: 10px;
+}
